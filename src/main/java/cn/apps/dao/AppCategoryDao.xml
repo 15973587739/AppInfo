@@ -14,5 +14,15 @@
   <sql id="Base_Column_List">
     id, categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate
   </sql>
+  <select id="queryParent" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from app_category
+    <where>
+      <if test="parentId != null">
+        and parentId = #{parentId}
+      </if>
+    </where>
+  </select>
 
 </mapper>
