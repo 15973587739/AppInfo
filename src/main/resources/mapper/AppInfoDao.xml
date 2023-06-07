@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.test.dao.AppInfoDao">
+
+    <resultMap type="cn.test.entity.AppInfo" id="AppInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="softwarename" column="softwareName" jdbcType="VARCHAR"/>
+        <result property="apkname" column="APKName" jdbcType="VARCHAR"/>
+        <result property="supportrom" column="supportROM" jdbcType="VARCHAR"/>
+        <result property="interfacelanguage" column="interfaceLanguage" jdbcType="VARCHAR"/>
+        <result property="softwaresize" column="softwareSize" jdbcType="NUMERIC"/>
+        <result property="updatedate" column="updateDate" jdbcType="TIMESTAMP"/>
+        <result property="devid" column="devId" jdbcType="INTEGER"/>
+        <result property="appinfo" column="appInfo" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="onsaledate" column="onSaleDate" jdbcType="TIMESTAMP"/>
+        <result property="offsaledate" column="offSaleDate" jdbcType="TIMESTAMP"/>
+        <result property="flatformid" column="flatformId" jdbcType="INTEGER"/>
+        <result property="categorylevel3" column="categoryLevel3" jdbcType="INTEGER"/>
+        <result property="downloads" column="downloads" jdbcType="INTEGER"/>
+        <result property="createdby" column="createdBy" jdbcType="INTEGER"/>
+        <result property="creationdate" column="creationDate" jdbcType="TIMESTAMP"/>
+        <result property="modifyby" column="modifyBy" jdbcType="INTEGER"/>
+        <result property="modifydate" column="modifyDate" jdbcType="TIMESTAMP"/>
+        <result property="categorylevel1" column="categoryLevel1" jdbcType="INTEGER"/>
+        <result property="categorylevel2" column="categoryLevel2" jdbcType="INTEGER"/>
+        <result property="logopicpath" column="logoPicPath" jdbcType="VARCHAR"/>
+        <result property="logolocpath" column="logoLocPath" jdbcType="VARCHAR"/>
+        <result property="versionid" column="versionId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AppInfoMap">
+        select
+          id, softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate, devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads, createdBy, creationDate, modifyBy, modifyDate, categoryLevel1, categoryLevel2, logoPicPath, logoLocPath, versionId
+        from app_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AppInfoMap">
+        select
+          id, softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate, devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads, createdBy, creationDate, modifyBy, modifyDate, categoryLevel1, categoryLevel2, logoPicPath, logoLocPath, versionId
+        from app_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="softwarename != null and softwarename != ''">
+                and softwareName = #{softwarename}
+            </if>
+            <if test="apkname != null and apkname != ''">
+                and APKName = #{apkname}
+            </if>
+            <if test="supportrom != null and supportrom != ''">
+                and supportROM = #{supportrom}
+            </if>
+            <if test="interfacelanguage != null and interfacelanguage != ''">
+                and interfaceLanguage = #{interfacelanguage}
+            </if>
+            <if test="softwaresize != null">
+                and softwareSize = #{softwaresize}
+            </if>
+            <if test="updatedate != null">
+                and updateDate = #{updatedate}
+            </if>
+            <if test="devid != null">
+                and devId = #{devid}
+            </if>
+            <if test="appinfo != null and appinfo != ''">
+                and appInfo = #{appinfo}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="onsaledate != null">
+                and onSaleDate = #{onsaledate}
+            </if>
+            <if test="offsaledate != null">
+                and offSaleDate = #{offsaledate}
+            </if>
+            <if test="flatformid != null">
+                and flatformId = #{flatformid}
+            </if>
+            <if test="categorylevel3 != null">
+                and categoryLevel3 = #{categorylevel3}
+            </if>
+            <if test="downloads != null">
+                and downloads = #{downloads}
+            </if>
+            <if test="createdby != null">
+                and createdBy = #{createdby}
+            </if>
+            <if test="creationdate != null">
+                and creationDate = #{creationdate}
+            </if>
+            <if test="modifyby != null">
+                and modifyBy = #{modifyby}
+            </if>
+            <if test="modifydate != null">
+                and modifyDate = #{modifydate}
+            </if>
+            <if test="categorylevel1 != null">
+                and categoryLevel1 = #{categorylevel1}
+            </if>
+            <if test="categorylevel2 != null">
+                and categoryLevel2 = #{categorylevel2}
+            </if>
+            <if test="logopicpath != null and logopicpath != ''">
+                and logoPicPath = #{logopicpath}
+            </if>
+            <if test="logolocpath != null and logolocpath != ''">
+                and logoLocPath = #{logolocpath}
+            </if>
+            <if test="versionid != null">
+                and versionId = #{versionid}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from app_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="softwarename != null and softwarename != ''">
+                and softwareName = #{softwarename}
+            </if>
+            <if test="apkname != null and apkname != ''">
+                and APKName = #{apkname}
+            </if>
+            <if test="supportrom != null and supportrom != ''">
+                and supportROM = #{supportrom}
+            </if>
+            <if test="interfacelanguage != null and interfacelanguage != ''">
+                and interfaceLanguage = #{interfacelanguage}
+            </if>
+            <if test="softwaresize != null">
+                and softwareSize = #{softwaresize}
+            </if>
+            <if test="updatedate != null">
+                and updateDate = #{updatedate}
+            </if>
+            <if test="devid != null">
+                and devId = #{devid}
+            </if>
+            <if test="appinfo != null and appinfo != ''">
+                and appInfo = #{appinfo}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="onsaledate != null">
+                and onSaleDate = #{onsaledate}
+            </if>
+            <if test="offsaledate != null">
+                and offSaleDate = #{offsaledate}
+            </if>
+            <if test="flatformid != null">
+                and flatformId = #{flatformid}
+            </if>
+            <if test="categorylevel3 != null">
+                and categoryLevel3 = #{categorylevel3}
+            </if>
+            <if test="downloads != null">
+                and downloads = #{downloads}
+            </if>
+            <if test="createdby != null">
+                and createdBy = #{createdby}
+            </if>
+            <if test="creationdate != null">
+                and creationDate = #{creationdate}
+            </if>
+            <if test="modifyby != null">
+                and modifyBy = #{modifyby}
+            </if>
+            <if test="modifydate != null">
+                and modifyDate = #{modifydate}
+            </if>
+            <if test="categorylevel1 != null">
+                and categoryLevel1 = #{categorylevel1}
+            </if>
+            <if test="categorylevel2 != null">
+                and categoryLevel2 = #{categorylevel2}
+            </if>
+            <if test="logopicpath != null and logopicpath != ''">
+                and logoPicPath = #{logopicpath}
+            </if>
+            <if test="logolocpath != null and logolocpath != ''">
+                and logoLocPath = #{logolocpath}
+            </if>
+            <if test="versionid != null">
+                and versionId = #{versionid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into app_info(softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate, devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads, createdBy, creationDate, modifyBy, modifyDate, categoryLevel1, categoryLevel2, logoPicPath, logoLocPath, versionId)
+        values (#{softwarename}, #{apkname}, #{supportrom}, #{interfacelanguage}, #{softwaresize}, #{updatedate}, #{devid}, #{appinfo}, #{status}, #{onsaledate}, #{offsaledate}, #{flatformid}, #{categorylevel3}, #{downloads}, #{createdby}, #{creationdate}, #{modifyby}, #{modifydate}, #{categorylevel1}, #{categorylevel2}, #{logopicpath}, #{logolocpath}, #{versionid})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into app_info(softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate, devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads, createdBy, creationDate, modifyBy, modifyDate, categoryLevel1, categoryLevel2, logoPicPath, logoLocPath, versionId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.softwarename}, #{entity.apkname}, #{entity.supportrom}, #{entity.interfacelanguage}, #{entity.softwaresize}, #{entity.updatedate}, #{entity.devid}, #{entity.appinfo}, #{entity.status}, #{entity.onsaledate}, #{entity.offsaledate}, #{entity.flatformid}, #{entity.categorylevel3}, #{entity.downloads}, #{entity.createdby}, #{entity.creationdate}, #{entity.modifyby}, #{entity.modifydate}, #{entity.categorylevel1}, #{entity.categorylevel2}, #{entity.logopicpath}, #{entity.logolocpath}, #{entity.versionid})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into app_info(softwareName, APKName, supportROM, interfaceLanguage, softwareSize, updateDate, devId, appInfo, status, onSaleDate, offSaleDate, flatformId, categoryLevel3, downloads, createdBy, creationDate, modifyBy, modifyDate, categoryLevel1, categoryLevel2, logoPicPath, logoLocPath, versionId)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.softwarename}, #{entity.apkname}, #{entity.supportrom}, #{entity.interfacelanguage}, #{entity.softwaresize}, #{entity.updatedate}, #{entity.devid}, #{entity.appinfo}, #{entity.status}, #{entity.onsaledate}, #{entity.offsaledate}, #{entity.flatformid}, #{entity.categorylevel3}, #{entity.downloads}, #{entity.createdby}, #{entity.creationdate}, #{entity.modifyby}, #{entity.modifydate}, #{entity.categorylevel1}, #{entity.categorylevel2}, #{entity.logopicpath}, #{entity.logolocpath}, #{entity.versionid})
+        </foreach>
+        on duplicate key update
+        softwareName = values(softwareName),
+        APKName = values(APKName),
+        supportROM = values(supportROM),
+        interfaceLanguage = values(interfaceLanguage),
+        softwareSize = values(softwareSize),
+        updateDate = values(updateDate),
+        devId = values(devId),
+        appInfo = values(appInfo),
+        status = values(status),
+        onSaleDate = values(onSaleDate),
+        offSaleDate = values(offSaleDate),
+        flatformId = values(flatformId),
+        categoryLevel3 = values(categoryLevel3),
+        downloads = values(downloads),
+        createdBy = values(createdBy),
+        creationDate = values(creationDate),
+        modifyBy = values(modifyBy),
+        modifyDate = values(modifyDate),
+        categoryLevel1 = values(categoryLevel1),
+        categoryLevel2 = values(categoryLevel2),
+        logoPicPath = values(logoPicPath),
+        logoLocPath = values(logoLocPath),
+        versionId = values(versionId)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update app_info
+        <set>
+            <if test="softwarename != null and softwarename != ''">
+                softwareName = #{softwarename},
+            </if>
+            <if test="apkname != null and apkname != ''">
+                APKName = #{apkname},
+            </if>
+            <if test="supportrom != null and supportrom != ''">
+                supportROM = #{supportrom},
+            </if>
+            <if test="interfacelanguage != null and interfacelanguage != ''">
+                interfaceLanguage = #{interfacelanguage},
+            </if>
+            <if test="softwaresize != null">
+                softwareSize = #{softwaresize},
+            </if>
+            <if test="updatedate != null">
+                updateDate = #{updatedate},
+            </if>
+            <if test="devid != null">
+                devId = #{devid},
+            </if>
+            <if test="appinfo != null and appinfo != ''">
+                appInfo = #{appinfo},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="onsaledate != null">
+                onSaleDate = #{onsaledate},
+            </if>
+            <if test="offsaledate != null">
+                offSaleDate = #{offsaledate},
+            </if>
+            <if test="flatformid != null">
+                flatformId = #{flatformid},
+            </if>
+            <if test="categorylevel3 != null">
+                categoryLevel3 = #{categorylevel3},
+            </if>
+            <if test="downloads != null">
+                downloads = #{downloads},
+            </if>
+            <if test="createdby != null">
+                createdBy = #{createdby},
+            </if>
+            <if test="creationdate != null">
+                creationDate = #{creationdate},
+            </if>
+            <if test="modifyby != null">
+                modifyBy = #{modifyby},
+            </if>
+            <if test="modifydate != null">
+                modifyDate = #{modifydate},
+            </if>
+            <if test="categorylevel1 != null">
+                categoryLevel1 = #{categorylevel1},
+            </if>
+            <if test="categorylevel2 != null">
+                categoryLevel2 = #{categorylevel2},
+            </if>
+            <if test="logopicpath != null and logopicpath != ''">
+                logoPicPath = #{logopicpath},
+            </if>
+            <if test="logolocpath != null and logolocpath != ''">
+                logoLocPath = #{logolocpath},
+            </if>
+            <if test="versionid != null">
+                versionId = #{versionid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from app_info where id = #{id}
+    </delete>
+
+</mapper>
+
