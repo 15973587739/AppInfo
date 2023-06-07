@@ -1,11 +1,14 @@
-package cn.apps.dao;
+package cn.apps.service;
 
 import cn.apps.pojo.DevUser;
 
 /**
- * @author Siyu
- */
-public interface DevUserDao {
+ * @Author: SIYU
+ * (DevUser)表服务接口
+ * @Description: TODO
+ * @DateTime: 2023/6/7 11:48
+ **/
+public interface DevUserService {
     /**
      * 通过user查询单条数据
      *
@@ -13,5 +16,4 @@ public interface DevUserDao {
      * @return 实例对象
      */
     DevUser queryByUser(DevUser user);
-
 }

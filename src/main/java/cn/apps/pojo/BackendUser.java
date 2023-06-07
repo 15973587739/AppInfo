@@ -54,6 +54,11 @@ public class BackendUser implements Serializable {
      */
     private String userPassword;
 
+    /**
+     * 类型类
+     */
+    private DataDictionary dictionary;
+
 
     /**
      * 主键id
@@ -152,5 +157,13 @@ public class BackendUser implements Serializable {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public DataDictionary getDictionary() {
+        return dictionary;
+    }
+
+    public void setDictionary(DataDictionary dictionary) {
+        this.dictionary = dictionary;
     }
 }

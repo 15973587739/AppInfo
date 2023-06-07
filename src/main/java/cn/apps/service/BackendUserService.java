@@ -1,8 +1,11 @@
-package cn.apps.dao;
+package cn.apps.service;
 
 import cn.apps.pojo.BackendUser;
 
-public interface BackendUserDao {
+/**
+ * @author Siyu
+ */
+public interface BackendUserService {
     /**
      * 通过user查询单条数据
      *

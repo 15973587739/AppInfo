@@ -17,131 +17,42 @@
     id, devCode, devName, devPassword, devEmail, devInfo, createdBy, creationDate, modifyBy, 
     modifyDate
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+  <select id="queryByUser"  resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from dev_user
-    where id = #{id,jdbcType=BIGINT}
+    <where>
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="devCode != null and devCode != ''">
+        and devCode = #{devCode}
+      </if>
+      <if test="devName != null and devName != ''">
+        and devName = #{devName}
+      </if>
+      <if test="devPassword != null and devPassword != ''">
+        and devPassword = #{devPassword}
+      </if>
+      <if test="devEmail != null and devEmail != ''">
+        and devEmail = #{devEmail}
+      </if>
+      <if test="devInfo != null and devInfo != ''">
+        and devInfo = #{devInfo}
+      </if>
+      <if test="createdBy != null">
+        and createdBy = #{createdBy}
+      </if>
+      <if test="creationDate != null">
+        and creationDate = #{creationDate}
+      </if>
+      <if test="modifyBy != null">
+        and modifyBy = #{modifyBy}
+      </if>
+      <if test="modifyDate != null">
+        and modifyDate = #{modifyDate}
+      </if>
+    </where>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from dev_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.apps.pojo.DevUser" useGeneratedKeys="true">
-    insert into dev_user (devCode, devName, devPassword, 
-      devEmail, devInfo, createdBy, 
-      creationDate, modifyBy, modifyDate
-      )
-    values (#{devCode,jdbcType=VARCHAR}, #{devName,jdbcType=VARCHAR}, #{devPassword,jdbcType=VARCHAR}, 
-      #{devEmail,jdbcType=VARCHAR}, #{devInfo,jdbcType=VARCHAR}, #{createdBy,jdbcType=BIGINT}, 
-      #{creationDate,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=BIGINT}, #{modifyDate,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.apps.pojo.DevUser" useGeneratedKeys="true">
-    insert into dev_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="devCode != null">
-        devCode,
-      </if>
-      <if test="devName != null">
-        devName,
-      </if>
-      <if test="devPassword != null">
-        devPassword,
-      </if>
-      <if test="devEmail != null">
-        devEmail,
-      </if>
-      <if test="devInfo != null">
-        devInfo,
-      </if>
-      <if test="createdBy != null">
-        createdBy,
-      </if>
-      <if test="creationDate != null">
-        creationDate,
-      </if>
-      <if test="modifyBy != null">
-        modifyBy,
-      </if>
-      <if test="modifyDate != null">
-        modifyDate,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="devCode != null">
-        #{devCode,jdbcType=VARCHAR},
-      </if>
-      <if test="devName != null">
-        #{devName,jdbcType=VARCHAR},
-      </if>
-      <if test="devPassword != null">
-        #{devPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="devEmail != null">
-        #{devEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="devInfo != null">
-        #{devInfo,jdbcType=VARCHAR},
-      </if>
-      <if test="createdBy != null">
-        #{createdBy,jdbcType=BIGINT},
-      </if>
-      <if test="creationDate != null">
-        #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyBy != null">
-        #{modifyBy,jdbcType=BIGINT},
-      </if>
-      <if test="modifyDate != null">
-        #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.apps.pojo.DevUser">
-    update dev_user
-    <set>
-      <if test="devCode != null">
-        devCode = #{devCode,jdbcType=VARCHAR},
-      </if>
-      <if test="devName != null">
-        devName = #{devName,jdbcType=VARCHAR},
-      </if>
-      <if test="devPassword != null">
-        devPassword = #{devPassword,jdbcType=VARCHAR},
-      </if>
-      <if test="devEmail != null">
-        devEmail = #{devEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="devInfo != null">
-        devInfo = #{devInfo,jdbcType=VARCHAR},
-      </if>
-      <if test="createdBy != null">
-        createdBy = #{createdBy,jdbcType=BIGINT},
-      </if>
-      <if test="creationDate != null">
-        creationDate = #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyBy != null">
-        modifyBy = #{modifyBy,jdbcType=BIGINT},
-      </if>
-      <if test="modifyDate != null">
-        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.apps.pojo.DevUser">
-    update dev_user
-    set devCode = #{devCode,jdbcType=VARCHAR},
-      devName = #{devName,jdbcType=VARCHAR},
-      devPassword = #{devPassword,jdbcType=VARCHAR},
-      devEmail = #{devEmail,jdbcType=VARCHAR},
-      devInfo = #{devInfo,jdbcType=VARCHAR},
-      createdBy = #{createdBy,jdbcType=BIGINT},
-      creationDate = #{creationDate,jdbcType=TIMESTAMP},
-      modifyBy = #{modifyBy,jdbcType=BIGINT},
-      modifyDate = #{modifyDate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+  
 </mapper>

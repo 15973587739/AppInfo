@@ -16,119 +16,80 @@
     id, userCode, userName, userType, createdBy, creationDate, modifyBy, modifyDate, 
     userPassword
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from backend_user
-    where id = #{id,jdbcType=BIGINT}
+
+  <resultMap id="userType" type="BackendUser">
+    <association property="dictionary" javaType="DataDictionary">
+      <id property="id" column="did"/>
+      <result property="typeName" column="typeName"/>
+    </association>
+  </resultMap>
+  <select id="queryByUser" resultMap="userType">
+    select b.*,d.id as did, d.valueName
+    from backend_user b,data_dictionary d
+    <where>
+      b.userType=d.id
+      and d.typeCode = "USER_TYPE"
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="userCode != null and userCode != ''">
+        and userCode = #{userCode}
+      </if>
+      <if test="userName != null and userName != ''">
+        and userName = #{userName}
+      </if>
+      <if test="userType != null">
+        and userType = #{userType}
+      </if>
+      <if test="createdBy != null">
+        and createdBy = #{createdBy}
+      </if>
+      <if test="creationDate != null">
+        and creationDate = #{creationDate}
+      </if>
+      <if test="modifyBy != null">
+        and modifyBy = #{modifyBy}
+      </if>
+      <if test="modifyDate != null">
+        and modifyDate = #{modifyDate}
+      </if>
+      <if test="userPassword != null and userPassword != ''">
+        and userPassword = #{userPassword}
+      </if>
+    </where>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from backend_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.apps.pojo.BackendUser" useGeneratedKeys="true">
-    insert into backend_user (userCode, userName, userType, 
-      createdBy, creationDate, modifyBy, 
-      modifyDate, userPassword)
-    values (#{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userType,jdbcType=BIGINT}, 
-      #{createdBy,jdbcType=BIGINT}, #{creationDate,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=BIGINT}, 
-      #{modifyDate,jdbcType=TIMESTAMP}, #{userPassword,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="cn.apps.pojo.BackendUser" useGeneratedKeys="true">
-    insert into backend_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userCode != null">
-        userCode,
-      </if>
-      <if test="userName != null">
-        userName,
-      </if>
-      <if test="userType != null">
-        userType,
-      </if>
-      <if test="createdBy != null">
-        createdBy,
-      </if>
-      <if test="creationDate != null">
-        creationDate,
-      </if>
-      <if test="modifyBy != null">
-        modifyBy,
-      </if>
-      <if test="modifyDate != null">
-        modifyDate,
-      </if>
-      <if test="userPassword != null">
-        userPassword,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userCode != null">
-        #{userCode,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userType != null">
-        #{userType,jdbcType=BIGINT},
-      </if>
-      <if test="createdBy != null">
-        #{createdBy,jdbcType=BIGINT},
-      </if>
-      <if test="creationDate != null">
-        #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyBy != null">
-        #{modifyBy,jdbcType=BIGINT},
-      </if>
-      <if test="modifyDate != null">
-        #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userPassword != null">
-        #{userPassword,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.apps.pojo.BackendUser">
-    update backend_user
-    <set>
-      <if test="userCode != null">
-        userCode = #{userCode,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null">
-        userName = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="userType != null">
-        userType = #{userType,jdbcType=BIGINT},
-      </if>
-      <if test="createdBy != null">
-        createdBy = #{createdBy,jdbcType=BIGINT},
-      </if>
-      <if test="creationDate != null">
-        creationDate = #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyBy != null">
-        modifyBy = #{modifyBy,jdbcType=BIGINT},
-      </if>
-      <if test="modifyDate != null">
-        modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="userPassword != null">
-        userPassword = #{userPassword,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.apps.pojo.BackendUser">
-    update backend_user
-    set userCode = #{userCode,jdbcType=VARCHAR},
-      userName = #{userName,jdbcType=VARCHAR},
-      userType = #{userType,jdbcType=BIGINT},
-      createdBy = #{createdBy,jdbcType=BIGINT},
-      creationDate = #{creationDate,jdbcType=TIMESTAMP},
-      modifyBy = #{modifyBy,jdbcType=BIGINT},
-      modifyDate = #{modifyDate,jdbcType=TIMESTAMP},
-      userPassword = #{userPassword,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+
+
+<!--  <select id="queryByUsers"  resultMap="BaseResultMap">-->
+<!--    select * from backend_user-->
+<!--    <where>-->
+<!--      <if test="id != null">-->
+<!--        and id = #{id}-->
+<!--      </if>-->
+<!--      <if test="userCode != null and userCode != ''">-->
+<!--        and userCode = #{userCode}-->
+<!--      </if>-->
+<!--      <if test="userName != null and userName != ''">-->
+<!--        and userName = #{userName}-->
+<!--      </if>-->
+<!--      <if test="userType != null">-->
+<!--        and userType = #{userType}-->
+<!--      </if>-->
+<!--      <if test="createdBy != null">-->
+<!--        and createdBy = #{createdBy}-->
+<!--      </if>-->
+<!--      <if test="creationDate != null">-->
+<!--        and creationDate = #{creationDate}-->
+<!--      </if>-->
+<!--      <if test="modifyBy != null">-->
+<!--        and modifyBy = #{modifyBy}-->
+<!--      </if>-->
+<!--      <if test="modifyDate != null">-->
+<!--        and modifyDate = #{modifyDate}-->
+<!--      </if>-->
+<!--      <if test="userPassword != null and userPassword != ''">-->
+<!--        and userPassword = #{userPassword}-->
+<!--      </if>-->
+<!--    </where>-->
+<!--  </select>-->
 </mapper>

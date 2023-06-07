@@ -115,8 +115,7 @@
         </property>
     </bean>
 
-    <!--配置静态资源-->
-    <mvc:resources mapping="/statics/**" location="/statics/"/>
+
 
     <!--内容协议视图解析器-->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
@@ -150,4 +149,6 @@
     <!--扫描注解类-->
     <context:component-scan base-package="cn.apps.controller"/>
 
+    <!--配置静态资源-->
+    <mvc:resources mapping="/statics/**" location="/statics/"/>
 </beans>
