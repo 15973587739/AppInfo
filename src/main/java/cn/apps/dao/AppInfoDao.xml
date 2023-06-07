@@ -34,4 +34,106 @@
     logoLocPath, versionId
   </sql>
 
+  <resultMap id="parameterList" type="AppInfo">
+    <association property="flDictionary" javaType="DataDictionary">
+      <id property="id" column="fid"/>
+      <result property="valueName" column="platform"/>
+    </association>
+    <association property="one" javaType="AppCategory">
+      <id property="id" column="ca1"/>
+      <result property="categoryName" column="one"/>
+    </association>
+    <association property="two" javaType="AppCategory">
+      <id property="id" column="ca2"/>
+      <result property="categoryName" column="tow"/>
+    </association>
+    <association property="three" javaType="AppCategory">
+      <id property="id" column="ca3"/>
+      <result property="categoryName" column="three"/>
+    </association>
+    <association property="appVersion" javaType="AppVersion">
+      <id property="id" column="ca3"/>
+      <result property="versionNo" column="versions"/>
+    </association>
+    <association property="stDictionary" javaType="DataDictionary">
+      <id property="id" column="ve1"/>
+      <result property="valueName" column="state"/>
+    </association>
+  </resultMap>
+  <select id="queryAllByLimit" resultMap="parameterList">
+    SELECT i.softwareName,i.APKName,i.softwareSize,i.flatformId,
+            i.status,i.versionId,
+            i.categoryLevel1,i.categoryLevel2,i.categoryLevel3,
+            i.flatformId as fid,
+            i.categoryLevel1 as ca1,i.categoryLevel2 as ca2 ,i.categoryLevel3 as ca3,
+            i.status as st1,i.versionId as ve1,
+    d1.valueName as platform,
+    c1.categoryName as one,c2.categoryName as tow,c3.categoryName as three,
+    d2.valueName as state,
+    i.downloads,
+    v.versionNo as versions
+    FROM app_info as i
+    LEFT JOIN data_dictionary as d1 ON d1.valueId = i.flatformId
+    LEFT JOIN app_category as c1 ON c1.id = i.categoryLevel1
+    LEFT JOIN app_category as c2 ON c2.id = i.categoryLevel2
+    LEFT JOIN app_category as c3 ON c3.id = i.categoryLevel3
+    LEFT JOIN data_dictionary as d2 ON d2.valueId = i.status
+    LEFT JOIN app_version as v ON v.id = i.versionId
+    <where>
+      and i.status = 1 AND d1.typeCode = 'APP_FLATFORM' AND d2.typeCode = 'APP_STATUS'
+      <if test="softwareName != null and softwareName != ''">
+        and i.softwareName like CONCAT('%',#{softwareName},'%')
+      </if>
+      <if test="state != null">
+        and status = #{state}
+      </if>
+      <if test="one != null">
+        and categoryLevel1 = #{one}
+      </if>
+      <if test="tow != null">
+        and categoryLevel2 = #{tow}
+      </if>
+      <if test="three != null">
+        and categoryLevel3 = #{three}
+      </if>
+      <if test="platform != null">
+        and flatformId = #{platform}
+      </if>
+    </where>
+    ORDER BY i.creationDate DESC
+    limit #{pageBegin} , #{pageSize}
+  </select>
+
+
+  <select id="queryCountByLimit" resultType="integer">
+    SELECT count(*) FROM app_info as i
+    LEFT JOIN data_dictionary as d1 ON d1.valueId = i.flatformId
+    LEFT JOIN app_category as c1 ON c1.id = i.categoryLevel1
+    LEFT JOIN app_category as c2 ON c2.id = i.categoryLevel2
+    LEFT JOIN app_category as c3 ON c3.id = i.categoryLevel3
+    LEFT JOIN data_dictionary as d2 ON d2.valueId = i.status
+    LEFT JOIN app_version as v ON v.id = i.versionId
+    <where>
+      and i.status = 1 AND d1.typeCode = 'APP_FLATFORM' AND d2.typeCode = 'APP_STATUS'
+      <if test="softwareName != null and softwareName != ''">
+        and i.softwareName like CONCAT('%',#{softwareName},'%')
+      </if>
+      <if test="state != null">
+        and status = #{state}
+      </if>
+      <if test="one != null">
+        and categoryLevel1 = #{one}
+      </if>
+      <if test="tow != null">
+        and categoryLevel2 = #{tow}
+      </if>
+      <if test="three != null">
+        and categoryLevel3 = #{three}
+      </if>
+      <if test="platform != null">
+        and flatformId = #{platform}
+      </if>
+    </where>
+  </select>
+
 </mapper>

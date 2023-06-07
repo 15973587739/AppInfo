@@ -50,6 +50,7 @@ public class DevController {
             session.setAttribute(Constants.DIV_USER_SESSION,user);
             return "redirect:/dev/toMain";
         }else {
+            logger.info("用户密码不正确:登录失败");
             request.setAttribute("error","用户密码不正确");
             return "redirect:/dev/toLogin";
         }

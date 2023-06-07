@@ -77,10 +77,7 @@ public class AppInfo implements Serializable {
      */
     private Integer flatformId;
 
-    /**
-     * 所属三级分类（来源于：data_dictionary）
-     */
-    private Integer categoryLevel3;
+
 
     /**
      * 下载量（单位：次）
@@ -116,6 +113,10 @@ public class AppInfo implements Serializable {
      * 所属二级分类（来源于：data_dictionary）
      */
     private Integer categoryLevel2;
+    /**
+     * 所属三级分类（来源于：data_dictionary）
+     */
+    private Integer categoryLevel3;
 
     /**
      * LOGO图片url路径
@@ -131,6 +132,26 @@ public class AppInfo implements Serializable {
      * 最新的版本id
      */
     private Integer versionId;
+
+    /**
+     * 平台类型类
+     */
+    private DataDictionary flDictionary;
+    /**
+     * 状态类型类
+     */
+    private DataDictionary stDictionary;
+    /**
+     * 所属分类
+     */
+    private AppCategory one;
+    private AppCategory two;
+    private AppCategory three;
+    /**
+     * 版本
+     */
+    private AppVersion appVersion;
+
 
 
 
@@ -278,17 +299,6 @@ public class AppInfo implements Serializable {
     }
 
     /**
-     * 所属三级分类（来源于：data_dictionary）
-     */
-    public Integer getCategoryLevel3() {
-        return categoryLevel3;
-    }
-
-    public void setCategoryLevel3(Integer categoryLevel3) {
-        this.categoryLevel3 = categoryLevel3;
-    }
-
-    /**
      * 下载量（单位：次）
      */
     public Integer getDownloads() {
@@ -366,6 +376,17 @@ public class AppInfo implements Serializable {
     }
 
     /**
+     * 所属三级分类（来源于：data_dictionary）
+     */
+    public Integer getCategoryLevel3() {
+        return categoryLevel3;
+    }
+
+    public void setCategoryLevel3(Integer categoryLevel3) {
+        this.categoryLevel3 = categoryLevel3;
+    }
+
+    /**
      * LOGO图片url路径
      */
     public String getLogoPicPath() {
@@ -396,5 +417,54 @@ public class AppInfo implements Serializable {
 
     public void setVersionId(Integer versionId) {
         this.versionId = versionId;
+    }
+
+
+    public AppVersion getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(AppVersion appVersion) {
+        this.appVersion = appVersion;
+    }
+
+    public DataDictionary getFlDictionary() {
+        return flDictionary;
+    }
+
+    public void setFlDictionary(DataDictionary flDictionary) {
+        this.flDictionary = flDictionary;
+    }
+
+    public DataDictionary getStDictionary() {
+        return stDictionary;
+    }
+
+    public void setStDictionary(DataDictionary stDictionary) {
+        this.stDictionary = stDictionary;
+    }
+
+    public AppCategory getOne() {
+        return one;
+    }
+
+    public void setOne(AppCategory one) {
+        this.one = one;
+    }
+
+    public AppCategory getTwo() {
+        return two;
+    }
+
+    public void setTwo(AppCategory two) {
+        this.two = two;
+    }
+
+    public AppCategory getThree() {
+        return three;
+    }
+
+    public void setThree(AppCategory three) {
+        this.three = three;
     }
 }

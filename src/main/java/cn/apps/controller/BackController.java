@@ -1,18 +1,23 @@
 package cn.apps.controller;
 
+import cn.apps.pojo.AppInfo;
 import cn.apps.pojo.BackendUser;
 import cn.apps.pojo.DevUser;
+import cn.apps.service.AppInfoService;
 import cn.apps.service.BackendUserService;
 import cn.apps.utils.Constants;
+import cn.apps.utils.Pager;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Author: SIYU
@@ -29,6 +34,8 @@ public class BackController {
      */
     @Resource
     private BackendUserService backendUserService;
+    @Resource
+    private AppInfoService appInfoService;
 
     ////////////////////////////////////////////////////////////////
 //    登录
@@ -50,6 +57,7 @@ public class BackController {
             session.setAttribute(Constants.USER_SESSION,user);
             return "redirect:/manager/toMain";
         }else {
+            logger.info("用户密码不正确:登录失败");
             request.setAttribute("error","用户密码不正确");
             return "redirect:/manager/toLogin";
         }
@@ -74,4 +82,42 @@ public class BackController {
 //    登录
     ////////////////////////////////////////////////////////////////
 
+/**********************************************************************************************************************************/
+
+    ////////////////////////////////////////////////////////////////
+//    列表查询
+    ////////////////////////////////////////////////////////////////
+
+    @RequestMapping("/backend/app/list")
+    public String list(Model model, @RequestParam(defaultValue = "1")Integer pageIndex){
+        logger.info("查询列表");
+
+        List<AppInfo> appInfos = null;
+        try {
+            int pageSize = Constants.pageSize;
+
+            int totalCount = appInfoService.queryCountByLimit(null,null,null,null,null,null);
+            if (totalCount < 0){
+                totalCount = 1;
+            }
+            Pager page = new Pager(totalCount, pageSize,pageIndex);
+
+            int totalPageCount = page.getPageCount();
+            if (pageIndex > totalPageCount){
+                pageIndex = totalPageCount;
+                throw  new RuntimeException("页码不正确");
+            }
+            appInfos = appInfoService.queryAllByLimit(null,null,null,null,null,null,pageIndex,5);
+            model.addAttribute("appInfoList",appInfos);
+
+            model.addAttribute("pageIndex", pageIndex);
+            model.addAttribute("totalPageCount", totalPageCount);
+            model.addAttribute("totalCount", totalCount);
+        }catch (Exception e) {
+            e.printStackTrace();
+            logger.error("用户列表接口访问失败");
+            return "redirect:/sysError";
+        }
+        return "backend/applist";
+    }
 }
