@@ -7,5 +7,4 @@ import cn.apps.pojo.AppCategory;
  */
 public interface AppCategoryDao {
 
-
 }

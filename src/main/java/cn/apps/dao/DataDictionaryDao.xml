@@ -15,5 +15,15 @@
   <sql id="Base_Column_List">
     id, typeCode, typeName, valueId, valueName, createdBy, creationDate, modifyBy, modifyDate
   </sql>
+  <select id="queryType" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from data_dictionary
+    <where>
+      <if test="typeCode != null and typeCode != ''">
+        and typeCode = #{typeCode}
+      </if>
+    </where>
+  </select>
 
 </mapper>

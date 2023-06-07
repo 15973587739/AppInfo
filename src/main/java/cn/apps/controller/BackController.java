@@ -2,9 +2,11 @@ package cn.apps.controller;
 
 import cn.apps.pojo.AppInfo;
 import cn.apps.pojo.BackendUser;
+import cn.apps.pojo.DataDictionary;
 import cn.apps.pojo.DevUser;
 import cn.apps.service.AppInfoService;
 import cn.apps.service.BackendUserService;
+import cn.apps.service.DataDictionaryService;
 import cn.apps.utils.Constants;
 import cn.apps.utils.Pager;
 import org.jboss.logging.Logger;
@@ -36,6 +38,8 @@ public class BackController {
     private BackendUserService backendUserService;
     @Resource
     private AppInfoService appInfoService;
+    @Resource
+    private DataDictionaryService dictionaryService;
 
     ////////////////////////////////////////////////////////////////
 //    登录
@@ -89,14 +93,16 @@ public class BackController {
     ////////////////////////////////////////////////////////////////
 
     @RequestMapping("/backend/app/list")
-    public String list(Model model, @RequestParam(defaultValue = "1")Integer pageIndex){
+    public String list(Model model,
+                       String querySoftwareName, Integer queryFlatformId,
+                       Integer queryCategoryLevel1,Integer queryCategoryLevel2,Integer queryCategoryLevel3,
+                       @RequestParam(defaultValue = "1")Integer pageIndex){
         logger.info("查询列表");
-
         List<AppInfo> appInfos = null;
+        List<DataDictionary> flatFormList = null;
         try {
             int pageSize = Constants.pageSize;
-
-            int totalCount = appInfoService.queryCountByLimit(null,null,null,null,null,null);
+            int totalCount = appInfoService.queryCountByLimit(querySoftwareName,null,queryFlatformId,queryCategoryLevel1,queryCategoryLevel2,queryCategoryLevel3);
             if (totalCount < 0){
                 totalCount = 1;
             }
@@ -107,9 +113,10 @@ public class BackController {
                 pageIndex = totalPageCount;
                 throw  new RuntimeException("页码不正确");
             }
-            appInfos = appInfoService.queryAllByLimit(null,null,null,null,null,null,pageIndex,5);
+            appInfos = appInfoService.queryAllByLimit(querySoftwareName,null,queryFlatformId,queryCategoryLevel1,queryCategoryLevel2,queryCategoryLevel3,pageIndex,pageSize);
             model.addAttribute("appInfoList",appInfos);
-
+            flatFormList = dictionaryService.queryType("APP_FLATFORM");
+            model.addAttribute("flatFormList",flatFormList);
             model.addAttribute("pageIndex", pageIndex);
             model.addAttribute("totalPageCount", totalPageCount);
             model.addAttribute("totalCount", totalCount);
