@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.test.dao.AppCategoryDao">
+
+    <resultMap type="cn.test.entity.AppCategory" id="AppCategoryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="categorycode" column="categoryCode" jdbcType="VARCHAR"/>
+        <result property="categoryname" column="categoryName" jdbcType="VARCHAR"/>
+        <result property="parentid" column="parentId" jdbcType="INTEGER"/>
+        <result property="createdby" column="createdBy" jdbcType="INTEGER"/>
+        <result property="creationtime" column="creationTime" jdbcType="TIMESTAMP"/>
+        <result property="modifyby" column="modifyBy" jdbcType="INTEGER"/>
+        <result property="modifydate" column="modifyDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AppCategoryMap">
+        select
+          id, categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate
+        from app_category
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AppCategoryMap">
+        select
+          id, categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate
+        from app_category
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="categorycode != null and categorycode != ''">
+                and categoryCode = #{categorycode}
+            </if>
+            <if test="categoryname != null and categoryname != ''">
+                and categoryName = #{categoryname}
+            </if>
+            <if test="parentid != null">
+                and parentId = #{parentid}
+            </if>
+            <if test="createdby != null">
+                and createdBy = #{createdby}
+            </if>
+            <if test="creationtime != null">
+                and creationTime = #{creationtime}
+            </if>
+            <if test="modifyby != null">
+                and modifyBy = #{modifyby}
+            </if>
+            <if test="modifydate != null">
+                and modifyDate = #{modifydate}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from app_category
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="categorycode != null and categorycode != ''">
+                and categoryCode = #{categorycode}
+            </if>
+            <if test="categoryname != null and categoryname != ''">
+                and categoryName = #{categoryname}
+            </if>
+            <if test="parentid != null">
+                and parentId = #{parentid}
+            </if>
+            <if test="createdby != null">
+                and createdBy = #{createdby}
+            </if>
+            <if test="creationtime != null">
+                and creationTime = #{creationtime}
+            </if>
+            <if test="modifyby != null">
+                and modifyBy = #{modifyby}
+            </if>
+            <if test="modifydate != null">
+                and modifyDate = #{modifydate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into app_category(categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate)
+        values (#{categorycode}, #{categoryname}, #{parentid}, #{createdby}, #{creationtime}, #{modifyby}, #{modifydate})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into app_category(categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.categorycode}, #{entity.categoryname}, #{entity.parentid}, #{entity.createdby}, #{entity.creationtime}, #{entity.modifyby}, #{entity.modifydate})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into app_category(categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.categorycode}, #{entity.categoryname}, #{entity.parentid}, #{entity.createdby}, #{entity.creationtime}, #{entity.modifyby}, #{entity.modifydate})
+        </foreach>
+        on duplicate key update
+        categoryCode = values(categoryCode),
+        categoryName = values(categoryName),
+        parentId = values(parentId),
+        createdBy = values(createdBy),
+        creationTime = values(creationTime),
+        modifyBy = values(modifyBy),
+        modifyDate = values(modifyDate)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update app_category
+        <set>
+            <if test="categorycode != null and categorycode != ''">
+                categoryCode = #{categorycode},
+            </if>
+            <if test="categoryname != null and categoryname != ''">
+                categoryName = #{categoryname},
+            </if>
+            <if test="parentid != null">
+                parentId = #{parentid},
+            </if>
+            <if test="createdby != null">
+                createdBy = #{createdby},
+            </if>
+            <if test="creationtime != null">
+                creationTime = #{creationtime},
+            </if>
+            <if test="modifyby != null">
+                modifyBy = #{modifyby},
+            </if>
+            <if test="modifydate != null">
+                modifyDate = #{modifydate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from app_category where id = #{id}
+    </delete>
+
+</mapper>
+
