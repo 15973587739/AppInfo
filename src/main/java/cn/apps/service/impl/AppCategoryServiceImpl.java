@@ -7,6 +7,7 @@ import cn.apps.pojo.AppCategory;
 import cn.apps.pojo.DataDictionary;
 import cn.apps.service.AppCategoryService;
 import cn.apps.service.DataDictionaryService;
+import cn.apps.utils.EmptyUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * (DevUser)表服务实现类
  *
- * @author makejava
+ * @author siyu
  * @since 2023-06-07 10:07:51
  */
 @Transactional
@@ -27,15 +28,27 @@ public class AppCategoryServiceImpl implements AppCategoryService {
     private AppCategoryDao appCategoryDao;
 
 
+    /**
+     * 查询子分类
+     * @param parentId
+     * @return
+     */
     @Override
-    public List<AppCategory> queryParent(String parentId) {
-        List<AppCategory> list = new ArrayList<AppCategory>();
+    public List<AppCategory> queryParent(Integer parentId) {
+        List<AppCategory> list = null ;
         try {
-            list = appCategoryDao.queryParent(parentId);
+            if (EmptyUtils.isNotEmpty(parentId)){
+                list = appCategoryDao.queryParent(parentId);//子分类
+            }else {
+                list = appCategoryDao.queryParent(0);//父分类
+            }
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw e;
         }
         return list;
     }
+
+
+
 }

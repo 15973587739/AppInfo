@@ -10,5 +10,5 @@ import java.util.List;
  * @author Siyu
  */
 public interface AppCategoryDao {
-    List<AppCategory> queryParent(@Param("parentId")String parentId);
+    List<AppCategory> queryParent(@Param("parentId")Integer parentId);
 }

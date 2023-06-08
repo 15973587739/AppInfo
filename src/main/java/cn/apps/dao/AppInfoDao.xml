@@ -61,9 +61,7 @@
     </association>
   </resultMap>
   <select id="queryAllByLimit" resultMap="parameterList">
-    SELECT i.softwareName,i.APKName,i.softwareSize,i.flatformId,
-            i.status,i.versionId,
-            i.categoryLevel1,i.categoryLevel2,i.categoryLevel3,
+    SELECT  i.*,
             i.flatformId as fid,
             i.categoryLevel1 as ca1,i.categoryLevel2 as ca2 ,i.categoryLevel3 as ca3,
             i.status as st1,i.versionId as ve1,
@@ -136,4 +134,23 @@
     </where>
   </select>
 
+  <select id="queryById" resultMap="parameterList">
+    SELECT  i.*,
+            i.flatformId as fid,
+            i.categoryLevel1 as ca1,i.categoryLevel2 as ca2 ,i.categoryLevel3 as ca3,
+            i.status as st1,i.versionId as ve1,
+            d1.valueName as platform,
+            c1.categoryName as one,c2.categoryName as tow,c3.categoryName as three,
+            d2.valueName as state,
+            i.downloads,
+            v.versionNo as versions
+    FROM app_info as i
+           LEFT JOIN data_dictionary as d1 ON d1.valueId = i.flatformId
+           LEFT JOIN app_category as c1 ON c1.id = i.categoryLevel1
+           LEFT JOIN app_category as c2 ON c2.id = i.categoryLevel2
+           LEFT JOIN app_category as c3 ON c3.id = i.categoryLevel3
+           LEFT JOIN data_dictionary as d2 ON d2.valueId = i.status
+           LEFT JOIN app_version as v ON v.id = i.versionId
+    where i.id = #{id} LIMIT 1
+  </select>
 </mapper>

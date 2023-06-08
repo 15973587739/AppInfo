@@ -1,20 +1,14 @@
 package cn.apps.controller;
 
-import cn.apps.pojo.AppInfo;
-import cn.apps.pojo.BackendUser;
-import cn.apps.pojo.DataDictionary;
-import cn.apps.pojo.DevUser;
-import cn.apps.service.AppInfoService;
-import cn.apps.service.BackendUserService;
-import cn.apps.service.DataDictionaryService;
+import cn.apps.pojo.*;
+import cn.apps.service.*;
 import cn.apps.utils.Constants;
 import cn.apps.utils.Pager;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +34,10 @@ public class BackController {
     private AppInfoService appInfoService;
     @Resource
     private DataDictionaryService dictionaryService;
+    @Resource
+    private AppCategoryService categoryService;
+    @Resource
+    private AppVersionService versionService;
 
     ////////////////////////////////////////////////////////////////
 //    登录
@@ -100,6 +98,7 @@ public class BackController {
         logger.info("查询列表");
         List<AppInfo> appInfos = null;
         List<DataDictionary> flatFormList = null;
+        List<AppCategory> categoryLevel1List = null;
         try {
             int pageSize = Constants.pageSize;
             int totalCount = appInfoService.queryCountByLimit(querySoftwareName,null,queryFlatformId,queryCategoryLevel1,queryCategoryLevel2,queryCategoryLevel3);
@@ -117,6 +116,8 @@ public class BackController {
             model.addAttribute("appInfoList",appInfos);
             flatFormList = dictionaryService.queryType("APP_FLATFORM");
             model.addAttribute("flatFormList",flatFormList);
+            categoryLevel1List = categoryService.queryParent(1);
+            model.addAttribute("categoryLevel1List",categoryLevel1List);
             model.addAttribute("pageIndex", pageIndex);
             model.addAttribute("totalPageCount", totalPageCount);
             model.addAttribute("totalCount", totalCount);
@@ -127,4 +128,67 @@ public class BackController {
         }
         return "backend/applist";
     }
+
+    @ResponseBody
+    @GetMapping("/backend/app/categoryList/{queryCategoryLevel}")
+    public Object view(@PathVariable Integer queryCategoryLevel){
+        logger.info("单查询列表id = "+queryCategoryLevel);
+        List<AppCategory> categoryLevelList = null;
+        try {
+            categoryLevelList = categoryService.queryParent(queryCategoryLevel);
+            logger.info("查询到集合信息"+categoryLevelList);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return "failed";
+        }
+        return categoryLevelList;
+    }
+
+    @GetMapping("/backend/app/check/{appinfoid}/{versionid}")
+    public String view(@PathVariable Integer appinfoid,
+                       @PathVariable Integer versionid,
+                       Model model){
+        logger.info("拿到 = "+appinfoid+"/"+versionid);
+        logger.info("查询应用Id"+appinfoid);
+        AppInfo appInfos = null;
+        appInfos = appInfoService.queryById(appinfoid);
+        model.addAttribute("appInfo", appInfos);
+        logger.info("查询版本Id"+versionid);
+        AppVersion appVersion = null;
+        appVersion = versionService.queryVersion(versionid,appinfoid);
+        model.addAttribute("appVersion",appVersion);
+        return "backend/appcheck";
+    }
+
+
+    ////////////////////////////////////////////////////////////////
+//    列表查询
+    ////////////////////////////////////////////////////////////////
+
+
+/**********************************************************************************************************************************/
+
+    ////////////////////////////////////////////////////////////////
+//    状态更新
+    ////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////
+//    状态更新
+    ////////////////////////////////////////////////////////////////
+
+
+/**********************************************************************************************************************************/
+
+
 }

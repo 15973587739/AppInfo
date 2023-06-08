@@ -20,5 +20,17 @@
     id, appId, versionNo, versionInfo, publishStatus, downloadLink, versionSize, createdBy, 
     creationDate, modifyBy, modifyDate, apkLocPath, apkFileName
   </sql>
-
+  <select id="queryVersion" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from app_version
+    <where>
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="appId != null">
+        and appId = #{appId}
+      </if>
+    </where>
+  </select>
 </mapper>

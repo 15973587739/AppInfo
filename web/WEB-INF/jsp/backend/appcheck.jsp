@@ -6,7 +6,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>查看并审核手游信息 <i class="fa fa-user"></i>${userSession.userName}</small></h2>
+        <h2>查看并审核手游信息 <i class="fa fa-user"></i>${userSession.userName}</h2>
              <div class="clearfix"></div>
       </div>
       <div class="x_title">
@@ -71,7 +71,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input type="text" class="form-control col-md-7 col-xs-12" 
-              	value="${appInfo.flatformName}" readonly="readonly">
+              	value="${appInfo.flDictionary.valueName}" readonly="readonly">
             
             </div>
           </div>
@@ -79,7 +79,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">所属分类 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input type="text" class="form-control col-md-7 col-xs-12" 
-              	value="${appInfo.categoryLevel1Name} --> ${appInfo.categoryLevel2Name} --> ${appInfo.categoryLevel3Name}" readonly="readonly">
+              	value="${appInfo.one.categoryName} --> ${appInfo.two.categoryName} --> ${appInfo.three.categoryName}" readonly="readonly">
             </div>
           </div>
           <div class="item form-group">
@@ -87,7 +87,7 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             	<input type="text" class="form-control col-md-7 col-xs-12" 
-              	value="${appInfo.statusName}" readonly="readonly">
+              	value="${appInfo.stDictionary.valueName}" readonly="readonly">
             </div>
           </div>
           <div class="item form-group">

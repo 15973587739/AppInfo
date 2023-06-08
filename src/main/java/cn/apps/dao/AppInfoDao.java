@@ -50,4 +50,12 @@ public interface AppInfoDao {
                                   @Param("tow")Integer tow,
                                   @Param("three")Integer three);
 
+
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param id 主键
+     * @return 实例对象
+     */
+    AppInfo queryById(@Param("id")Integer id);
 }

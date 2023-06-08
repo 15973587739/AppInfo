@@ -54,4 +54,11 @@ public interface AppInfoService {
                               Integer three);
 
 
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param appinfoid 主键
+     * @return 实例对象
+     */
+    AppInfo queryById(Integer appinfoid);
 }

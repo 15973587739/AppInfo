@@ -9,5 +9,9 @@ import java.util.List;
  * @author Siyu
  */
 public interface AppCategoryService {
-    List<AppCategory> queryParent(String parentId);
+    /**
+     * 查询分类
+     * @param parentId
+     * @return
+     */List<AppCategory> queryParent(Integer parentId);
 }
