@@ -33,4 +33,45 @@
       </if>
     </where>
   </select>
+
+  <resultMap id="parameterList" type="AppVersion">
+    <association property="appInfo" javaType="AppInfo">
+      <id property="id" column="ve1"/>
+      <result property="softwareName" column="softwareName"/>
+    </association>
+    <association property="stDictionary" javaType="DataDictionary">
+      <id property="id" column="ve1"/>
+      <result property="valueName" column="state"/>
+    </association>
+  </resultMap>
+  <select id="queryVersionInfo" resultMap="BaseResultMap">
+    select  v.* ,
+            i.versionId as ve1,
+            i.softwareName as softwareName,
+            d.valueName as state
+    from app_version as v
+    LEFT JOIN app_info as i ON i.versionId = v.id
+    LEFT JOIN data_dictionary as d ON d.valueId = i.status
+    <where>
+      <if test="id != null">
+        and v.id = #{id}
+      </if>
+      <if test="appId != null">
+        and v.appId = #{appId}
+      </if>
+    </where>
+  </select>
+
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="cn.apps.pojo.AppVersion" useGeneratedKeys="true">
+    insert into app_version (appId, versionNo, versionInfo,
+                             publishStatus, downloadLink, versionSize,
+                             createdBy, creationDate, modifyBy,
+                             modifyDate, apkLocPath, apkFileName
+    )
+    values (#{appId,jdbcType=BIGINT}, #{versionNo,jdbcType=VARCHAR}, #{versionInfo,jdbcType=VARCHAR},
+            #{publishStatus,jdbcType=BIGINT}, #{downloadLink,jdbcType=VARCHAR}, #{versionSize,jdbcType=DECIMAL},
+            #{createdBy,jdbcType=BIGINT}, #{creationDate,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=BIGINT},
+            #{modifyDate,jdbcType=TIMESTAMP}, #{apkLocPath,jdbcType=VARCHAR}, #{apkFileName,jdbcType=VARCHAR}
+           )
+  </insert>
 </mapper>

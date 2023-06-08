@@ -71,7 +71,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input type="text" class="form-control col-md-7 col-xs-12" 
-              	value="${appInfo.flatformName}" readonly="readonly">
+              	value="${appInfo.flDictionary.valueName}" readonly="readonly">
             
             </div>
           </div>
@@ -79,7 +79,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="select">所属分类 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input type="text" class="form-control col-md-7 col-xs-12" 
-              	value="${appInfo.categoryLevel1Name} --> ${appInfo.categoryLevel2Name} --> ${appInfo.categoryLevel3Name}" readonly="readonly">
+              	value="${appInfo.one.categoryName} --> ${appInfo.two.categoryName} --> ${appInfo.three.categoryName}" readonly="readonly">
             </div>
           </div>
           <div class="item form-group">
@@ -87,7 +87,7 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             	<input type="text" class="form-control col-md-7 col-xs-12" 
-              	value="${appInfo.statusName}" readonly="readonly">
+              	value="${appInfo.stDictionary.valueName}" readonly="readonly">
             </div>
           </div>
           <div class="item form-group">
@@ -167,10 +167,10 @@
 						<tbody>
 							<c:forEach var="appVersion" items="${appVersionList }" varStatus="status">
 								<tr role="row" class="odd">
-									<td tabindex="0" class="sorting_1">${appVersion.appName}</td>
+									<td tabindex="0" class="sorting_1">${appVersion.appInfo.softwareName}</td>
 									<td>${appVersion.versionNo }</td>
 									<td>${appVersion.versionSize }</td>
-									<td>${appVersion.publishStatusName }</td>
+									<td>${appVersion.stDictionary.valueName }</td>
 									<td>
 									<a href="${appVersion.downloadLink }">${appVersion.apkFileName }</a>
 									</td>

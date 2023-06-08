@@ -61,4 +61,11 @@ public interface AppInfoService {
      * @return 实例对象
      */
     AppInfo queryById(Integer appinfoid);
+    /**
+     * 通过主键删除数据
+     *
+     * @param id 主键
+     * @return 影响行数
+     */
+    int deleteById(Integer id);
 }

@@ -58,4 +58,20 @@ public interface AppInfoDao {
      * @return 实例对象
      */
     AppInfo queryById(@Param("id")Integer id);
+
+    /**
+     * 修改数据
+     *
+     * @param appInfo 实例对象
+     * @return 影响行数
+     */
+    int update(AppInfo appInfo);
+
+    /**
+     * 通过主键删除数据
+     *
+     * @param id 主键
+     * @return 影响行数
+     */
+    int deleteById(@Param("id")Integer id);
 }

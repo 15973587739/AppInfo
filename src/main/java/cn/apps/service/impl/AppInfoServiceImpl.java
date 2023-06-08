@@ -86,4 +86,16 @@ public class AppInfoServiceImpl implements AppInfoService{
         }
         return appInfo;
     }
+
+    @Override
+    public int deleteById(Integer id) {
+        int result = 0;
+        try {
+            result = appInfoDao.deleteById(id);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return result;
+    }
 }

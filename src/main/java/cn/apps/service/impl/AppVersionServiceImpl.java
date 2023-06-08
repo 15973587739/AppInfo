@@ -37,4 +37,28 @@ public class AppVersionServiceImpl implements AppVersionService {
         }
         return version;
     }
+
+    @Override
+    public List<AppVersion> queryVersionInfo(Integer id, Integer appId) {
+        List<AppVersion> list = null;
+        try {
+            list = appVersionDao.queryVersionInfo(id,appId);//版本号
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return list;
+    }
+
+    @Override
+    public int insert(AppVersion appVersion) {
+        Integer result = 0;
+        try {
+            result = appVersionDao.insert(appVersion);//对象
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return result;
+    }
 }

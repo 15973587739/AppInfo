@@ -76,6 +76,15 @@ public class AppVersion implements Serializable {
      */
     private String apkFileName;
 
+    /**
+     * 状态类型类
+     */
+    private DataDictionary stDictionary;
+
+    /**
+     * 应用类
+     */
+    private AppInfo appInfo;
 
     /**
      * 主键id
@@ -218,5 +227,21 @@ public class AppVersion implements Serializable {
 
     public void setApkFileName(String apkFileName) {
         this.apkFileName = apkFileName;
+    }
+
+    public DataDictionary getStDictionary() {
+        return stDictionary;
+    }
+
+    public void setStDictionary(DataDictionary stDictionary) {
+        this.stDictionary = stDictionary;
+    }
+
+    public AppInfo getAppInfo() {
+        return appInfo;
+    }
+
+    public void setAppInfo(AppInfo appInfo) {
+        this.appInfo = appInfo;
     }
 }
