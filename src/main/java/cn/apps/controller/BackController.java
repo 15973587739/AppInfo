@@ -112,7 +112,7 @@ public class BackController {
                 pageIndex = totalPageCount;
                 throw  new RuntimeException("页码不正确");
             }
-            appInfos = appInfoService.queryAllByLimit(querySoftwareName,null,queryFlatformId,queryCategoryLevel1,queryCategoryLevel2,queryCategoryLevel3,pageIndex,pageSize);
+            appInfos = appInfoService.queryAllByLimit(querySoftwareName,null,queryFlatformId,queryCategoryLevel1,queryCategoryLevel2,queryCategoryLevel3,pageIndex,pageSize,1);
             model.addAttribute("appInfoList",appInfos);
             flatFormList = dictionaryService.queryType("APP_FLATFORM");
             model.addAttribute("flatFormList",flatFormList);

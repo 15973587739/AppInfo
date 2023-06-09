@@ -40,14 +40,15 @@
       <result property="softwareName" column="softwareName"/>
     </association>
     <association property="stDictionary" javaType="DataDictionary">
-      <id property="id" column="ve1"/>
+      <id property="id" column="sid"/>
       <result property="valueName" column="state"/>
     </association>
   </resultMap>
-  <select id="queryVersionInfo" resultMap="BaseResultMap">
+  <select id="queryVersionInfo" resultMap="parameterList">
     select  v.* ,
             i.versionId as ve1,
             i.softwareName as softwareName,
+            d.id as sid,
             d.valueName as state
     from app_version as v
     LEFT JOIN app_info as i ON i.versionId = v.id

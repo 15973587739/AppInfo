@@ -57,16 +57,16 @@
 						</thead>
 						<tbody>
 							<c:forEach var="appVersion" items="${appVersionList }" varStatus="status">
-								<tr role="row" class="odd">
-									<td tabindex="0" class="sorting_1">${appVersion.appName}</td>
-									<td>${appVersion.versionNo }</td>
-									<td>${appVersion.versionSize }</td>
-									<td>${appVersion.publishStatusName }</td>
-									<td>
-									<a href="${appVersion.downloadLink }">${appVersion.apkFileName }</a>
-									</td>
-									<td><fmt:formatDate value="${appVersion.modifyDate }" pattern="yyyy-MM-dd"/></td>
-								</tr>
+                                <tr role="row" class="odd">
+                                    <td tabindex="0" class="sorting_1">${appVersion.appInfo.softwareName}</td>
+                                    <td>${appVersion.versionNo }</td>
+                                    <td>${appVersion.versionSize }</td>
+                                    <td>${appVersion.stDictionary.valueName }</td>
+                                    <td>
+                                        <a href="${appVersion.downloadLink }">${appVersion.apkFileName }</a>
+                                    </td>
+                                    <td><fmt:formatDate value="${appVersion.modifyDate }" pattern="yyyy-MM-dd"/></td>
+                                </tr>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -91,7 +91,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">版本号 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <input class="form-control col-md-7 col-xs-12" value="${appVersion.versionNo }" 
+              <input class="form-control col-md-7 col-xs-12" value="${appInfo.appVersion.versionNo }"
               type="text" readonly="readonly" id="versionNo" name="versionNo">
             </div>
           </div>

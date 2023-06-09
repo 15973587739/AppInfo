@@ -113,7 +113,7 @@ public class DevController {
                 pageIndex = totalPageCount;
                 throw  new RuntimeException("页码不正确");
             }
-            appInfos = appInfoService.queryAllByLimit(querySoftwareName,queryStatus,queryFlatformId,queryCategoryLevel1,queryCategoryLevel2,queryCategoryLevel3,pageIndex,pageSize);
+            appInfos = appInfoService.queryAllByLimit(querySoftwareName,queryStatus,queryFlatformId,queryCategoryLevel1,queryCategoryLevel2,queryCategoryLevel3,pageIndex,pageSize,0);
             model.addAttribute("appInfoList",appInfos);
             flatFormList = dictionaryService.queryType("APP_FLATFORM");
             model.addAttribute("flatFormList",flatFormList);
@@ -134,7 +134,7 @@ public class DevController {
 
     @ResponseBody
     @GetMapping("/flatform/app/categoryList/{queryCategoryLevel}")
-    public Object view(@PathVariable Integer queryCategoryLevel){
+    public Object categoryList(@PathVariable Integer queryCategoryLevel){
         logger.info("单查询列表id = "+queryCategoryLevel);
         List<AppCategory> categoryLevelList = null;
         try {
@@ -147,6 +147,23 @@ public class DevController {
         return categoryLevelList;
     }
 
+    
+
+    @ResponseBody
+    @GetMapping("/flatform/app/dataDictionaryList/{tcode}")
+    public Object dataDictionaryList(@PathVariable String tcode){
+        logger.info("平台类型 = "+tcode);
+        List<DataDictionary> dictionaryList = null;
+        try {
+            dictionaryList = dictionaryService.queryType(tcode);
+            logger.info("查询到集合信息"+dictionaryList);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return "failed";
+        }
+        return dictionaryList;
+    }
+
     @GetMapping("flatform/app/appview/{appinfoid}")
     public String view(@PathVariable Integer appinfoid,
                        Model model){
@@ -154,11 +171,11 @@ public class DevController {
         AppInfo appInfos = null;
         appInfos = appInfoService.queryById(appinfoid);
         model.addAttribute("appInfo", appInfos);
-        if(appInfos.getFlatformId()!=null){
-            logger.info("拿到 = "+appinfoid+"/"+appInfos.getFlatformId());
-            logger.info("查询版本Id"+appInfos.getFlatformId());
+        if(appInfos.getAppVersion()!=null){
+            logger.info("拿到 = "+appinfoid+"/"+appInfos.getAppVersion().getId());
+            logger.info("查询版本Id"+appInfos.getVersionId());
             List<AppVersion> appVersionList = null;
-            appVersionList = versionService.queryVersionInfo(appInfos.getFlatformId(),appinfoid);
+            appVersionList = versionService.queryVersionInfo(appInfos.getVersionId(),appinfoid);
             model.addAttribute("appVersionList",appVersionList);
         }
         return "developer/appinfoview";
@@ -166,17 +183,17 @@ public class DevController {
 
     @GetMapping("/flatform/app/appVersionAdd/{appinfoid}")
     public String appVersionAdd(@PathVariable Integer appinfoid,
-                                @RequestParam(required = false) Integer versionid,
+                                @PathVariable(required = false) Integer versionid,
                                 Model model){
         logger.info("查询应用Id"+appinfoid);
         AppInfo appInfos = null;
         appInfos = appInfoService.queryById(appinfoid);
         model.addAttribute("appInfo", appInfos);
-        if(versionid!=null){
-            logger.info("拿到 = "+appinfoid+"/"+versionid);
-            logger.info("查询版本Id"+versionid);
+        if(versionid!=null||appInfos.getAppVersion()!=null){
+            logger.info("拿到 = "+appinfoid+"/"+appInfos.getAppVersion().getId());
+            logger.info("查询版本Id"+appInfos.getVersionId());
             List<AppVersion> appVersionList = null;
-            appVersionList = versionService.queryVersionInfo(versionid,appinfoid);
+            appVersionList = versionService.queryVersionInfo(versionid==null?appInfos.getAppVersion().getId():versionid,appinfoid);
             model.addAttribute("appVersionList",appVersionList);
         }
         return "developer/appversionadd";
@@ -196,6 +213,11 @@ public class DevController {
     ////////////////////////////////////////////////////////////////
 //    信息添加
     ////////////////////////////////////////////////////////////////
+
+    @GetMapping("/flatform/app/appinfoadd")
+    public String appinfoadd(Model model){
+        return "developer/appinfoadd";
+    }
 
     @PostMapping("/flatform/app/addVersionSave")
     public String add(AppVersion appVersion){
@@ -218,10 +240,34 @@ public class DevController {
 //    状态更新
     ////////////////////////////////////////////////////////////////
 
+    @GetMapping("/flatform/app/appVersionModify/{appinfoid}/{versionid}")
+    public String appVersionModify(@PathVariable Integer appinfoid,
+                                @PathVariable(required = false) Integer versionid,
+                                Model model){
+        logger.info("查询应用Id"+appinfoid);
+        AppInfo appInfos = null;
+        appInfos = appInfoService.queryById(appinfoid);
+        model.addAttribute("appInfo", appInfos);
+        if(versionid!=null||appInfos.getAppVersion()!=null){
+            logger.info("拿到 = "+appinfoid+"/"+appInfos.getAppVersion().getId()+"/"+versionid);
+            logger.info("查询版本Id"+appInfos.getVersionId());
+            List<AppVersion> appVersionList = null;
+            appVersionList = versionService.queryVersionInfo(versionid==null?appInfos.getAppVersion().getId():versionid,appinfoid);
+            model.addAttribute("appVersionList",appVersionList);
+        }
+        return "developer/appversionmodify";
+    }
 
 
-
-
+    @GetMapping("/flatform/app/appInfoModify/{appinfoid}")
+    public String appInfoModify(@PathVariable Integer appinfoid,
+                                   Model model){
+        logger.info("查询应用Id"+appinfoid);
+        AppInfo appInfos = null;
+        appInfos = appInfoService.queryById(appinfoid);
+        model.addAttribute("appInfo", appInfos);
+        return "developer/appinfomodify";
+    }
 
 
 

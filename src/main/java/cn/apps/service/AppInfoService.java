@@ -33,7 +33,9 @@ public interface AppInfoService {
                                   Integer tow,
                                   Integer three,
                                   Integer pageBegin,
-                                  Integer pageSize);
+                                  Integer pageSize,
+                                  Integer type
+    );
 
     /**
      * 查询指定行数据

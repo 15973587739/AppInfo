@@ -40,10 +40,10 @@ public class AppInfoServiceImpl implements AppInfoService{
      * @return 对象列表
      */
     @Override
-    public List<AppInfo> queryAllByLimit(String softwareName, Integer state, Integer platform, Integer one, Integer tow, Integer three, Integer pageBegin, Integer pageSize) {
+    public List<AppInfo> queryAllByLimit(String softwareName, Integer state, Integer platform, Integer one, Integer tow, Integer three, Integer pageBegin, Integer pageSize,Integer type) {
         List<AppInfo> list = new ArrayList<AppInfo>();
         try {
-            list = appInfoDao.queryAllByLimit(softwareName, state, platform, one, tow, three,(pageBegin-1)*pageSize, pageSize);
+            list = appInfoDao.queryAllByLimit(softwareName, state, platform, one, tow, three,(pageBegin-1)*pageSize, pageSize,type);
         } catch (RuntimeException e) {
             e.printStackTrace();
             throw e;

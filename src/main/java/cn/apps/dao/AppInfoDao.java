@@ -30,7 +30,9 @@ public interface AppInfoDao {
                                   @Param("tow")Integer tow,
                                   @Param("three")Integer three,
                                   @Param("pageBegin") Integer pageBegin,
-                                  @Param("pageSize") Integer pageSize);
+                                  @Param("pageSize") Integer pageSize,
+                                  @Param("type") Integer type
+    );
 
     /**
      * 查询指定行数据

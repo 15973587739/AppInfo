@@ -41,6 +41,7 @@
               	placeholder="请输入支持的ROM" type="text">
             </div>
           </div>
+
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">界面语言 <span class="required">*</span>
             </label>
@@ -51,6 +52,7 @@
               placeholder="请输入软件支持的界面语言" type="text">
             </div>
           </div>
+
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">软件大小 <span class="required">*</span>
             </label>
@@ -68,6 +70,7 @@
               data-validate-minmax="10,500"  placeholder="请输入下载次数" class="form-control col-md-7 col-xs-12">
             </div>
           </div>
+
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -99,14 +102,16 @@
               <select name="categoryLevel3" id="categoryLevel3" class="form-control"  required="required"></select>
             </div>
           </div>
+
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">手游状态 <span class="required">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
             	<input id="statusName" type="text" class="form-control col-md-7 col-xs-12" 
-              	name="statusName" value="${appInfo.statusName}" readonly="readonly">
+              	name="statusName" value="${appInfo.stDictionary.valueName}" readonly="readonly">
             </div>
           </div>
+
           <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="textarea">应用简介 <span class="required">*</span>
             </label>
@@ -116,6 +121,7 @@
               ${appInfo.appInfo}</textarea>
             </div>
           </div>
+
            <div class="item form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">LOGO图片 <span class="required">*</span>
             </label>
@@ -130,6 +136,7 @@
 				${fileUploadError }
             </div>
           </div>
+
           <div class="form-group">
             <div class="col-md-6 col-md-offset-3">
             	<c:if test="${appInfo.status == 3}">

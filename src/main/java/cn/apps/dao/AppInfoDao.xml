@@ -78,7 +78,15 @@
     LEFT JOIN data_dictionary as d2 ON d2.valueId = i.status
     LEFT JOIN app_version as v ON v.id = i.versionId
     <where>
-      and i.status = 1 AND d1.typeCode = 'APP_FLATFORM' AND d2.typeCode = 'APP_STATUS'
+      <if test="type == 1 ">
+        and i.status = 1 AND d1.typeCode = 'APP_FLATFORM' AND d2.typeCode = 'APP_STATUS'
+      </if>
+      <if test="type == 0 ">
+        and d1.typeCode = 'APP_FLATFORM' AND d2.typeCode = 'APP_STATUS'
+      </if>
+      <if test="type == null ">
+        and d1.typeCode = 'APP_FLATFORM' AND d2.typeCode = 'APP_STATUS'
+      </if>
       <if test="softwareName != null and softwareName != ''">
         and i.softwareName like CONCAT('%',#{softwareName},'%')
       </if>
