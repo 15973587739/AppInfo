@@ -70,6 +70,14 @@ public interface AppInfoDao {
     int update(AppInfo appInfo);
 
     /**
+     * 审核状态修改
+     *
+     * @param appinfoid 游戏Id
+     * @return 影响行数
+     */
+    int checkSave(@Param("appinfoid")Integer appinfoid,@Param("status")Integer status);
+
+    /**
      * 通过主键删除数据
      *
      * @param id 主键

@@ -173,7 +173,17 @@ public class BackController {
     ////////////////////////////////////////////////////////////////
 
 
-
+    @PostMapping("/backend/app/check/{appinfoid}/checksave")
+    public String checkSave(AppInfo appInfo) {
+        logger.info("审核游戏");
+        int result = 0;
+        result = appInfoService.checkSave(appInfo.getId(),appInfo.getStatus());
+        if (result> 0) {
+            logger.info("响应结果"+result);
+            return "redirect:/manager/backend/app/list";
+        }
+        return "backend/appinfomodify";
+    }
 
 
 

@@ -147,11 +147,44 @@ public class DevController {
         return categoryLevelList;
     }
 
-    
+    @ResponseBody
+    @GetMapping("/flatform/app/appInfoModify/categoryList/{queryCategoryLevel}")
+    public Object category(@PathVariable Integer queryCategoryLevel){
+        logger.info("单查询列表id = "+queryCategoryLevel);
+        List<AppCategory> categoryLevelList = null;
+        try {
+            categoryLevelList = categoryService.queryParent(queryCategoryLevel);
+            logger.info("查询到集合信息"+categoryLevelList);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return "failed";
+        }
+        return categoryLevelList;
+    }
 
     @ResponseBody
     @GetMapping("/flatform/app/dataDictionaryList/{tcode}")
     public Object dataDictionaryList(@PathVariable String tcode){
+        logger.info("平台类型 = "+tcode);
+        List<DataDictionary> dictionaryList = null;
+        try {
+            dictionaryList = dictionaryService.queryType(tcode);
+            logger.info("查询到集合信息"+dictionaryList);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return "failed";
+        }
+        return dictionaryList;
+    }
+
+    /**
+     * 修改
+     * @param tcode
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("/flatform/app/appInfoModify/dataDictionaryList/{tcode}")
+    public Object dictionaryList(@PathVariable String tcode){
         logger.info("平台类型 = "+tcode);
         List<DataDictionary> dictionaryList = null;
         try {
@@ -268,6 +301,8 @@ public class DevController {
         model.addAttribute("appInfo", appInfos);
         return "developer/appinfomodify";
     }
+
+
 
 
 

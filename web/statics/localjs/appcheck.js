@@ -1,3 +1,4 @@
 $("#back").on("click",function(){
-	window.location.href = "list";
+	window.history.go(-1);
+	// window.location.href = "/backend/app/list";
 });

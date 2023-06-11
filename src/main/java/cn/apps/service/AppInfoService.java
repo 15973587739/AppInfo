@@ -57,6 +57,22 @@ public interface AppInfoService {
 
 
     /**
+     * 修改数据
+     *
+     * @param appInfo 实例对象
+     * @return 影响行数
+     */
+    int update(AppInfo appInfo);
+
+    /**
+     * 审核状态修改
+     *
+     * @param appinfoid 游戏Id
+     * @return 影响行数
+     */
+    int checkSave(Integer appinfoid,Integer status);
+
+    /**
      * 通过ID查询单条数据
      *
      * @param appinfoid 主键

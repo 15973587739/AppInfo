@@ -76,6 +76,30 @@ public class AppInfoServiceImpl implements AppInfoService{
     }
 
     @Override
+    public int update(AppInfo appInfo) {
+        int result = 0;
+        try {
+            result = appInfoDao.update(appInfo);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return result;
+    }
+
+    @Override
+    public int checkSave(Integer appinfoid,Integer status) {
+        int result = 0;
+        try {
+            result = appInfoDao.checkSave(appinfoid,status);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return result;
+    }
+
+    @Override
     public AppInfo queryById(Integer appinfoid) {
         AppInfo appInfo = null;
         try {

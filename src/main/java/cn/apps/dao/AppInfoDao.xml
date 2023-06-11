@@ -239,6 +239,15 @@
     where id = #{id}
   </update>
 
+  <!--通过主键修改数据-->
+  <update id="checkSave">
+    update app_info
+    <set>
+        status =  #{status}
+    </set>
+    where id = #{appinfoid}
+  </update>
+
   <delete id="deleteById" parameterType="java.lang.Long">
     delete from app_info
     where id = #{id,jdbcType=BIGINT}
